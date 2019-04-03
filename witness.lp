@@ -60,6 +60,16 @@ path(P) :-
 path_sym(P) :- path(P).
 path_sym(p(B,A)) :- path_sym(p(A,B)).
 
+pathes_around_block(b(X,Y), p(c(X,Y), c(X+1,Y))) :- crossing(c(X,Y)).
+pathes_around_block(b(X,Y), p(c(X,Y), c(X,Y+1))) :- crossing(c(X,Y)).
+pathes_around_block(b(X,Y), p(c(X+1,Y), c(X+1,Y+1))) :- crossing(c(X,Y)).
+pathes_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1))) :- crossing(c(X,Y)).
+
+block(B) :-
+	4 { pathes_around_block(B,P) : pathes_around_block(B,P) },
+	crossing(c(XB,YB)),
+	B = b(XB,YB).
+
 % connection might be made by drawing the line on a path
 0{conn(P)}1 :- path(P).
 connection(P) :- conn(P).
