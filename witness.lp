@@ -42,9 +42,11 @@ crossing(A) :-
 	coordinate(A);
 	not blocked(A).
 
-% helper
+% helpers
 neighbor_offset(0,1).
 neighbor_offset(1,0).
+
+blocked(p(A,B)) :- blocked(p(B,A)).
 
 % connecting lines on the grid
 line(p(c(X1,Y1),c(X2,Y2))) :-
@@ -56,7 +58,7 @@ line(p(c(X1,Y1),c(X2,Y2))) :-
 % paths are lines on the map
 path(P) :-
 	line(P);
-	not blocked(P). % TODO: line is not symmetric yet
+	not blocked(P).
 path_sym(P) :- path(P).
 path_sym(p(B,A)) :- path_sym(p(A,B)).
 
