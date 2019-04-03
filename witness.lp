@@ -14,6 +14,8 @@ blocked(p(c(2,2),c(3,2))).
 dot(p(c(0,2), c(0,3))).
 dot(c(1,1)).
 
+triangles(3,b(0,2)).
+
 %%%%%%%%%%%%%%%
 % explanation %
 %%%%%%%%%%%%%%%
@@ -30,6 +32,9 @@ dot(p(c(x1,y1), c(x2,y2))).
 
 % dot on the crossing
 dot(c(x,y)).
+
+% n triangles on block
+triangles(n,b(x,y)).
 
 %%%%%%%%%
 % model %
@@ -102,6 +107,10 @@ conn(p(A,B)) :-
 	not used(A),
 	crossing(A).
 
+N { conn(P) : pathes_around_block(B,P) } N :-
+	triangles(N, B),
+	block(B).
+
 %%%%%%%%%%%%%%%%%
 % visualization %
 %%%%%%%%%%%%%%%%%
@@ -145,6 +154,15 @@ draw(4, circle(cx((X1+X2)*10/2), cy((Y1+Y2)*10/2), r(1), fill("gray"))) :-
 draw(4, circle(cx(X*10), cy(Y*10), r(1), fill("gray"))) :-
 	dot(c(X,Y)),
 	crossing(c(X,Y)).
+
+draw(4, circle(cx(X*10+5),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(1,b(X,Y)).
+
+draw(4, circle(cx(X*10+3),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
+draw(4, circle(cx(X*10+7),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
+
+draw(4, circle(cx(X*10+5),cy(Y*10+3),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4, circle(cx(X*10+3),cy(Y*10+6),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4, circle(cx(X*10+7),cy(Y*10+6),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
 
 %% example directives
 %draw(2, rect(x(10*X), y(10*Y), width(1), height(1), fill("red"))).
