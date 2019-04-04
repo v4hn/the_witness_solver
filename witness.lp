@@ -20,7 +20,7 @@ triangles(3,b(0,2)).
 % explanation %
 %%%%%%%%%%%%%%%
 
-% TODO: make this a different program segment
+#program definitions.
 
 % coordinate does not exist in map
 blocked(c(x,y)).
@@ -39,6 +39,8 @@ triangles(n,b(x,y)).
 %%%%%%%%%
 % model %
 %%%%%%%%%
+
+#program base.
 
 % coordinates are locations on the grid
 coordinate(c(0..X-1, 0..Y-1)) :- grid(X,Y).
