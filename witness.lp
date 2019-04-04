@@ -126,14 +126,36 @@ draw(1, line(x1(10*X1), y1(10*Y1), x2(10*X2), y2(10*Y2), stroke("black"), style(
 % big circle around start
 draw(2, circle(cx(10*X), cy(10*Y), r(2), fill("black"))) :-
 	start(c(X,Y)).
-% draw exit
-% TODO: change side_exit into exit_direction(n/e/s/w, c(x,y))
-side_exit :- exit(c(X,Y)), not path_sym(p(c(X,Y),c(X+1,Y))).
-side_exit :- exit(c(X,Y)), not path_sym(p(c(X,Y),c(X-1,Y))).
-draw(2, rect(x(10*X-3), y(10*Y-1), width(6), height(2), fill("black"))) :-
-	exit(c(X,Y)), side_exit.
-draw(2, rect(x(10*X-1), y(10*Y-3), width(2), height(6), fill("black"))) :-
-	exit(c(X,Y)), not side_exit.
+
+%TODO: add and use above/2, below/2, left/2, right/2.
+%TODO: add and use path_left/2, path_right/2, path_up/2, path_down/2.
+
+% draw exit depending on direction
+exit_direction(c(X,Y), up) :-
+	exit(c(X,Y));
+	not path(p(c(X,Y-1), c(X,Y))).
+exit_direction(c(X,Y), down) :-
+	exit(c(X,Y));
+	not path(p(c(X,Y), c(X,Y+1))).
+exit_direction(c(X,Y), left) :-
+	exit(c(X,Y));
+	not path(p(c(X-1,Y), c(X,Y)));
+	not exit_direction(c(X,Y), down);
+	not exit_direction(c(X,Y), up).
+exit_direction(c(X,Y), right) :-
+	exit(c(X,Y));
+	not path(p(c(X,Y), c(X+1,Y)));
+	not exit_direction(c(X,Y), down);
+	not exit_direction(c(X,Y), up).
+
+draw(2, rect(x(10*X-3), y(10*Y-1), width(3), height(2), fill("black"))) :-
+	exit_direction(c(X,Y), left).
+draw(2, rect(x(10*X), y(10*Y-1), width(3), height(2), fill("black"))) :-
+	exit_direction(c(X,Y), right).
+draw(2, rect(x(10*X-1), y(10*Y-3), width(2), height(3), fill("black"))) :-
+	exit_direction(c(X,Y), up).
+draw(2, rect(x(10*X-1), y(10*Y), width(2), height(3), fill("black"))) :-
+	exit_direction(c(X,Y), down).
 
 % draw solution lines
 draw(3, line(x1(10*X1), y1(10*Y1), x2(10*X2), y2(10*Y2), stroke("lightgray"), style("stroke-width:2"))) :-
