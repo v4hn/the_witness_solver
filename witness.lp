@@ -176,8 +176,7 @@ draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
 % draw dot on path
 draw(4, circle(cx((X1+X2)*n/2), cy((Y1+Y2)*n/2), r(lwidth/2), fill("gray"))) :-
 	dot(p(c(X1,Y1),c(X2,Y2))),
-	crossing(c(X1,Y1)),
-	crossing(c(X2,Y2)).
+	path_sym(p(c(X1,Y1),c(X2,Y2))).
 
 % draw dot on crossing
 draw(4, circle(cx(X*n), cy(Y*n), r(lwidth/2), fill("gray"))) :-
