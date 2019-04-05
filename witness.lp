@@ -117,14 +117,17 @@ N { conn(P) : pathes_around_block(B,P) } N :-
 % visualization %
 %%%%%%%%%%%%%%%%%
 
+#const n= 20.
+#const lwidth= n/5.
+
 % rounded off grid
-draw(1, circle(cx(10*X), cy(10*Y), r(1), fill("black"))) :-
+draw(1, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("black"))) :-
 	crossing(c(X,Y)).
-draw(1, line(x1(10*X1), y1(10*Y1), x2(10*X2), y2(10*Y2), stroke("black"), style("stroke-width:2"))) :-
+draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("black"), style("stroke-width:4"))) :-
 	path(p(c(X1,Y1), c(X2,Y2))).
 
 % big circle around start
-draw(2, circle(cx(10*X), cy(10*Y), r(2), fill("black"))) :-
+draw(2, circle(cx(n*X), cy(n*Y), r(lwidth), fill("black"))) :-
 	start(c(X,Y)).
 
 %TODO: add and use above/2, below/2, left/2, right/2.
@@ -148,47 +151,50 @@ exit_direction(c(X,Y), right) :-
 	not exit_direction(c(X,Y), down);
 	not exit_direction(c(X,Y), up).
 
-draw(2, rect(x(10*X-3), y(10*Y-1), width(3), height(2), fill("black"))) :-
+draw(2, rect(x(n*X-3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
 	exit_direction(c(X,Y), left).
-draw(2, rect(x(10*X), y(10*Y-1), width(3), height(2), fill("black"))) :-
+draw(2, rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
 	exit_direction(c(X,Y), right).
-draw(2, rect(x(10*X-1), y(10*Y-3), width(2), height(3), fill("black"))) :-
+draw(2, rect(x(n*X-lwidth/2), y(n*Y-3), width(lwidth), height(n/3), fill("black"))) :-
 	exit_direction(c(X,Y), up).
-draw(2, rect(x(10*X-1), y(10*Y), width(2), height(3), fill("black"))) :-
+draw(2, rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black"))) :-
 	exit_direction(c(X,Y), down).
 
 % draw solution lines
-draw(3, line(x1(10*X1), y1(10*Y1), x2(10*X2), y2(10*Y2), stroke("lightgray"), style("stroke-width:2"))) :-
+draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style("stroke-width:4"))) :-
 	conn(p(c(X1,Y1), c(X2,Y2))).
-draw(3, circle(cx(10*X), cy(10*Y), r(1), fill("lightgray"))) :-
+draw(3, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("lightgray"))) :-
 	used(c(X,Y)).
 
 % draw solution start
-draw(3, circle(cx(10*X), cy(10*Y), r(2), fill("lightgray"))) :-
+draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
 	used(c(X,Y)),
 	start(c(X,Y)).
 
 %TODO: draw solution end
 
-draw(4, circle(cx((X1+X2)*10/2), cy((Y1+Y2)*10/2), r(1), fill("gray"))) :-
+% draw dot on path
+draw(4, circle(cx((X1+X2)*n/2), cy((Y1+Y2)*n/2), r(lwidth/2), fill("gray"))) :-
 	dot(p(c(X1,Y1),c(X2,Y2))),
 	crossing(c(X1,Y1)),
 	crossing(c(X2,Y2)).
 
-draw(4, circle(cx(X*10), cy(Y*10), r(1), fill("gray"))) :-
+% draw dot on crossing
+draw(4, circle(cx(X*n), cy(Y*n), r(lwidth/2), fill("gray"))) :-
 	dot(c(X,Y)),
 	crossing(c(X,Y)).
 
-draw(4, circle(cx(X*10+5),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(1,b(X,Y)).
+% draw blocks with N (1-3) triangles
+draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(1), fill("rgb(240,230,0)"))) :- triangles(1,b(X,Y)).
 
-draw(4, circle(cx(X*10+3),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
-draw(4, circle(cx(X*10+7),cy(Y*10+5),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
+draw(4, circle(cx(X*n+n/3),cy(Y*n+n/2),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
+draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n/2),r(1), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
 
-draw(4, circle(cx(X*10+5),cy(Y*10+3),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
-draw(4, circle(cx(X*10+3),cy(Y*10+6),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
-draw(4, circle(cx(X*10+7),cy(Y*10+6),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4, circle(cx(X*n+n/2),cy(Y*n+n/3),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4, circle(cx(X*n+n/3),cy(Y*n+n*2/3),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n*2/3),r(1), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
 
 %% example directives
-%draw(2, rect(x(10*X), y(10*Y), width(1), height(1), fill("red"))).
+%draw(2, rect(x(n*X), y(n*Y), width(1), height(1), fill("red"))).
 %draw(1, circle(cx(X), cy(Y), r(20), fill("black"))).
-%draw(1, line(x1(10*X1), y1(10*Y1), x2(10*X2), y2(10*Y2), stroke("black"), style("stroke-width:0.1"))).
+%draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("black"), style("stroke-width:0.1"))).
