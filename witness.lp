@@ -49,6 +49,9 @@ crossing(A) :-
 	coordinate(A);
 	not blocked(A).
 
+% blocks are the square areas between coordinates/lines
+block(b(0..X-2, 0..Y-2)) :- grid(X,Y).
+
 % helpers
 neighbor_offset(0,1).
 neighbor_offset(1,0).
@@ -69,15 +72,14 @@ path(P) :-
 path_sym(P) :- path(P).
 path_sym(p(B,A)) :- path_sym(p(A,B)).
 
-pathes_around_block(b(X,Y), p(c(X,Y), c(X+1,Y))) :- crossing(c(X,Y)).
-pathes_around_block(b(X,Y), p(c(X,Y), c(X,Y+1))) :- crossing(c(X,Y)).
-pathes_around_block(b(X,Y), p(c(X+1,Y), c(X+1,Y+1))) :- crossing(c(X,Y)).
-pathes_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1))) :- crossing(c(X,Y)).
-
-block(B) :-
-	4 { pathes_around_block(B,P) : pathes_around_block(B,P) },
-	crossing(c(XB,YB)),
-	B = b(XB,YB).
+% relate blocks on the grid to their corresponding surrounding paths
+4 {
+paths_around_block(b(X,Y), p(c(X,Y), c(X+1,Y)));
+paths_around_block(b(X,Y), p(c(X,Y), c(X,Y+1)));
+paths_around_block(b(X,Y), p(c(X+1,Y), c(X+1,Y+1)));
+paths_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1)))
+} :-
+	block(b(X,Y)).
 
 % connection might be made by drawing the line on a path
 0{conn(P)}1 :- path(P).
@@ -109,7 +111,8 @@ conn(p(A,B)) :-
 	not used(A),
 	crossing(A).
 
-N { conn(P) : pathes_around_block(B,P) } N :-
+% force N paths around triangle block
+N { conn(P) : paths_around_block(B,P) } N :-
 	triangles(N, B),
 	block(B).
 
