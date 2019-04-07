@@ -17,6 +17,7 @@ dot(c(1,1)).
 triangles(3,b(0,2)).
 
 colored_block(b(0,1), "green").
+colored_block(b(0,0), "orange").
 
 %%%%%%%%%%%%%%%
 % explanation %
