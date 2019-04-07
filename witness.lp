@@ -121,9 +121,15 @@ N { conn(P) : paths_around_block(B,P) } N :-
 	block(B).
 
 block_connection(b(Xb1,Yb1), b(Xb2,Yb2)) :-
-	path(p(c(X1,Y1),c(X1+1,Y2))),
+	not connection(p(c(X1,Y1),c(X1+1,Y1))),
+	Xb1=X1, Yb1=Y1-1,
+	Xb2=X1, Yb2=Y1,
+	block(b(Xb1,Yb1)),
+	block(b(Xb2,Yb2)).
+block_connection(b(Xb1,Yb1), b(Xb2,Yb2)) :-
+	not connection(p(c(X1,Y1),c(X1,Y1+1))),
 	Xb1=X1-1, Yb1=Y1,
-	Xb2=X1  , Yb2=Y1,
+	Xb2=X1, Yb2=Y1,
 	block(b(Xb1,Yb1)),
 	block(b(Xb2,Yb2)).
 
@@ -216,6 +222,11 @@ draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))) :- 
 % draw colored dots in blocks
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-
 	colored_block(b(X,Y), Color).
+
+
+%% draw block_connection for debugging purposes
+%draw(6, line(x1(X1*n+n/2), x2(X2*n+n/2), y1(Y1*n+n/2), y2(Y2*n+n/2), stroke("red"), style("stroke-width:2.0"))) :-
+%	block_connection(b(X1,Y1), b(X2,Y2)).
 
 %% example directives
 %draw(2, rect(x(n*X), y(n*Y), width(1), height(1), fill("red"))).
