@@ -120,6 +120,19 @@ N { conn(P) : paths_around_block(B,P) } N :-
 	triangles(N, B),
 	block(B).
 
+block_connection(b(Xb1,Yb1), b(Xb2,Yb2)) :-
+	path(p(c(X1,Y1),c(X1+1,Y2))),
+	Xb1=X1-1, Yb1=Y1,
+	Xb2=X1  , Yb2=Y1,
+	block(b(Xb1,Yb1)),
+	block(b(Xb2,Yb2)).
+
+% TODO: color grid according to connected colors
+floodfilled_color(B, Color) :- colored_block(B, Color).
+floodfilled_color(Bn, Color) :-
+	floodfilled_color(B, Color),
+	block_connection(B, Bn). %TODO: implement block_connection
+
 %%%%%%%%%%%%%%%%%
 % visualization %
 %%%%%%%%%%%%%%%%%
