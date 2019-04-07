@@ -7,10 +7,10 @@ grid(4,4).
 
 % start/exit position
 start(c(0,0)).
-exit(c(2,0)).
+exit(c(3,1)).
 
 blocked(c(3,3)).
-blocked(p(c(2,2),c(3,2))).
+blocked(p(c(1,2),c(2,2))).
 dot(p(c(0,2), c(0,3))).
 dot(c(1,1)).
 
