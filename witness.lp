@@ -65,10 +65,11 @@ line(p(c(X1,Y1),c(X2,Y2))) :-
 	X2= X1+XO;
 	Y2= Y1+YO;
 	neighbor_offset(XO,YO).
-% paths are lines on the map
+% paths are lines on the map that are not deliberately blocked
 path(P) :-
 	line(P);
 	not blocked(P).
+% symmetric version of path/1.
 path_sym(P) :- path(P).
 path_sym(p(B,A)) :- path_sym(p(A,B)).
 
@@ -82,6 +83,7 @@ paths_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1)))
 	block(b(X,Y)).
 
 % connection might be made by drawing the line on a path
+% this is the main choice in this puzzle
 0{conn(P)}1 :- path(P).
 connection(P) :- conn(P).
 connection(p(B,A)) :- conn(p(A,B)).
