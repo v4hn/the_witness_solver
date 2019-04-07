@@ -109,20 +109,36 @@ if __name__ == '__main__':
 	ctl.load("witness.lp")
 	ctl.ground([("base", [])])
 	print(
-	'''<html>
+'''<html>
 <head>
 <title>Witness Puzzle</title>
 <style>
-svg {
-	width=100%;
-	height=auto;
+div.solution {
+        display:inline-block;
+	min-width:200px;
+        width: 22%;
+        background-color: white;
+        border: 10px solid green;
+        padding: 5px;
+        margin: 5px;
 }
+
+/*
+div.solution:hover {
+	transform:scale(1.7);
+        transform-origin: top left;
+}
+*/
 </style>
 </head>
-<body>''')
+<body>
+<div id="solutions">''')
 	with ctl.solve(yield_= True) as solutions:
 		for s in solutions:
-			print("<div>")
+			print('<div class="solution">')
 			print(serialize(s))
-			print("</div>")
-	print("</body>\n</html>")
+			print('</div>')
+	print(
+'''</div>
+</body>
+</html>''')
