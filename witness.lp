@@ -178,14 +178,23 @@ exit_direction(c(X,Y), right) :-
 	not exit_direction(c(X,Y), down);
 	not exit_direction(c(X,Y), up).
 
-draw(2, rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
-	exit_direction(c(X,Y), left).
-draw(2, rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
+draw(2,
+	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black")),
+	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2))
+	) :- exit_direction(c(X,Y), left).
+draw(2,
+	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black")),
+	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2))
+	) :-
 	exit_direction(c(X,Y), right).
-draw(2, rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("black"))) :-
-	exit_direction(c(X,Y), up).
-draw(2, rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black"))) :-
-	exit_direction(c(X,Y), down).
+draw(2,
+	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("black")),
+	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2))
+	) :- exit_direction(c(X,Y), up).
+draw(2,
+	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black")),
+	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2))
+	) :- exit_direction(c(X,Y), down).
 
 % show interupted paths if they are blocked
 % this draws line starts for both ends of the blocked line because blocked(p/2) is symmetric
