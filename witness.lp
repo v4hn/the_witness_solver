@@ -218,12 +218,16 @@ draw(4, circle(cx(X*n), cy(Y*n), r(lwidth/2), fill("gray"))) :-
 % draw blocks with N (1-3) triangles
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/10), fill("rgb(240,230,0)"))) :- triangles(1,b(X,Y)).
 
-draw(4, circle(cx(X*n+n/3),cy(Y*n+n/2),r(n/10), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
-draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n/2),r(n/10), fill("rgb(240,230,0)"))) :- triangles(2,b(X,Y)).
+draw(4,
+	circle(cx(X*n+n/3),cy(Y*n+n/2),r(n/10), fill("rgb(240,230,0)")),
+	circle(cx(X*n+n*2/3),cy(Y*n+n/2),r(n/10), fill("rgb(240,230,0)"))
+	) :- triangles(2,b(X,Y)).
 
-draw(4, circle(cx(X*n+n/2),cy(Y*n+n/3),r(n/10), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
-draw(4, circle(cx(X*n+n/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
-draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
+draw(4,
+	circle(cx(X*n+n/2),cy(Y*n+n/3),r(n/10), fill("rgb(240,230,0)")),
+	circle(cx(X*n+n/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)")),
+	circle(cx(X*n+n*2/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))
+	) :- triangles(3,b(X,Y)).
 
 % draw colored dots in blocks
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-

@@ -82,16 +82,21 @@ ClassMap = {
 }
 
 def parse_atoms(draw):
+	draw_out = []
 	for fig in draw:
-		fig["figure"]= ClassMap[fig["figure"].name](fig["figure"])
+		for i in range(len(fig["figure"])):
+			f= {"layer" : fig["layer"]}
+			f["figure"]= ClassMap[fig["figure"][i].name](fig["figure"][i])
+			draw_out.append(f)
+	return draw_out
 
 def serialize(model):
 	symbols= {}
-	draw = [{ "layer" : d.arguments[0].number, "figure" : d.arguments[1]} for d in model.symbols(atoms= True) if d.name == "draw"]
+	draw = [{ "layer" : d.arguments[0].number, "figure" : d.arguments[1:]} for d in model.symbols(atoms= True) if d.name == "draw"]
 
 	draw.sort(key= lambda d: d["layer"])
 
-	parse_atoms(draw)
+	draw= parse_atoms(draw)
 
 	canvas= Box((0,0),(0,0))
 	for fig in draw:
