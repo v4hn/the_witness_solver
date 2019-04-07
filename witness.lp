@@ -16,6 +16,8 @@ dot(c(1,1)).
 
 triangles(3,b(0,2)).
 
+colored_block(b(0,1), "green").
+
 %%%%%%%%%%%%%%%
 % explanation %
 %%%%%%%%%%%%%%%
@@ -198,7 +200,9 @@ draw(4, circle(cx(X*n+n/2),cy(Y*n+n/3),r(n/10), fill("rgb(240,230,0)"))) :- tria
 draw(4, circle(cx(X*n+n/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
 draw(4, circle(cx(X*n+n*2/3),cy(Y*n+n*2/3),r(n/10), fill("rgb(240,230,0)"))) :- triangles(3,b(X,Y)).
 
-
+% draw colored dots in blocks
+draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-
+	colored_block(b(X,Y), Color).
 
 %% example directives
 %draw(2, rect(x(n*X), y(n*Y), width(1), height(1), fill("red"))).
