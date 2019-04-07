@@ -187,6 +187,11 @@ draw(2, rect(x(n*X-lwidth/2), y(n*Y-3), width(lwidth), height(n/3), fill("black"
 draw(2, rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black"))) :-
 	exit_direction(c(X,Y), down).
 
+% show interupted paths if they are blocked
+% this draws line starts for both ends of the blocked line because blocked(p/2) is symmetric
+draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y2), stroke("black"), style("stroke-width:4"))) :-
+	blocked(p(c(X1,Y1), c(X2,Y2))).
+
 % draw solution lines
 draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style("stroke-width:4"))) :-
 	conn(p(c(X1,Y1), c(X2,Y2))).
