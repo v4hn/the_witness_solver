@@ -180,20 +180,20 @@ exit_direction(c(X,Y), right) :-
 
 draw(2,
 	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black")),
-	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2))
+	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2), fill("black"))
 	) :- exit_direction(c(X,Y), left).
 draw(2,
 	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black")),
-	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2))
+	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2), fill("black"))
 	) :-
 	exit_direction(c(X,Y), right).
 draw(2,
 	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("black")),
-	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2))
+	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2), fill("black"))
 	) :- exit_direction(c(X,Y), up).
 draw(2,
 	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black")),
-	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2))
+	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("black"))
 	) :- exit_direction(c(X,Y), down).
 
 % show interupted paths if they are blocked
@@ -212,7 +212,22 @@ draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
 	used(c(X,Y)),
 	start(c(X,Y)).
 
-%TODO: draw solution end
+draw(3,
+	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
+	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), left), used(c(X,Y)).
+draw(3,
+	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
+	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), right), used(c(X,Y)).
+draw(3,
+	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("lightgray")),
+	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), up), used(c(X,Y)).
+draw(3,
+	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("lightgray")),
+	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), down), used(c(X,Y)).
 
 % draw dot on path
 draw(4, circle(cx((X1+X2)*n/2), cy((Y1+Y2)*n/2), r(lwidth/2), fill("gray"))) :-
