@@ -138,7 +138,7 @@ block_connection(b(Xb1,Yb1), b(Xb2,Yb2)) :-
 floodfilled_color(B, Color) :- colored_block(B, Color).
 floodfilled_color(Bn, Color) :-
 	floodfilled_color(B, Color),
-	block_connection(B, Bn). %TODO: implement block_connection
+	block_connection(B, Bn).
 
 %%%%%%%%%%%%%%%%%
 % visualization %
