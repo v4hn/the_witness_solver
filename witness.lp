@@ -178,11 +178,11 @@ exit_direction(c(X,Y), right) :-
 	not exit_direction(c(X,Y), down);
 	not exit_direction(c(X,Y), up).
 
-draw(2, rect(x(n*X-3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
+draw(2, rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
 	exit_direction(c(X,Y), left).
 draw(2, rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black"))) :-
 	exit_direction(c(X,Y), right).
-draw(2, rect(x(n*X-lwidth/2), y(n*Y-3), width(lwidth), height(n/3), fill("black"))) :-
+draw(2, rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("black"))) :-
 	exit_direction(c(X,Y), up).
 draw(2, rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("black"))) :-
 	exit_direction(c(X,Y), down).
