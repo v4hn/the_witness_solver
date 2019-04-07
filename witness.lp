@@ -133,12 +133,14 @@ block_connection(b(Xb1,Yb1), b(Xb2,Yb2)) :-
 	Xb2=X1, Yb2=Y1,
 	block(b(Xb1,Yb1)),
 	block(b(Xb2,Yb2)).
+block_connection(B1,B2) :- block_connection(B2,B1).
 
-% TODO: color grid according to connected colors
 floodfilled_color(B, Color) :- colored_block(B, Color).
 floodfilled_color(Bn, Color) :-
 	floodfilled_color(B, Color),
 	block_connection(B, Bn).
+
+0 { floodfilled_color(B, Color) : floodfilled_color(B,Color) } 1 :- block(B).
 
 %%%%%%%%%%%%%%%%%
 % visualization %
@@ -256,6 +258,14 @@ draw(4,
 % draw colored dots in blocks
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-
 	colored_block(b(X,Y), Color).
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% debug visualization %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% draw colors for "flooded" block
+%draw(0, circle(cx(X*n+n/2), cy(Y*n+n/2), r(n/3), fill(Color), opacity("0.5"))) :-
+%	floodfilled_color(b(X,Y), Color).
 
 
 %% draw block_connection for debugging purposes
