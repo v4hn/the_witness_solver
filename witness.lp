@@ -19,6 +19,11 @@ triangles(3,b(0,2)).
 colored_block(b(0,1), "green").
 colored_block(b(0,0), "orange").
 
+pattern(b(2,0), 0).
+shape(0, o(0,0)).
+shape(0, o(0,1)).
+shape(0, o(1,0)).
+
 %%%%%%%%%%%%%%%
 % explanation %
 %%%%%%%%%%%%%%%
@@ -262,6 +267,22 @@ draw(4,
 % draw colored dots in blocks
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-
 	colored_block(b(X,Y), Color).
+
+% TODO: draw rectangles instead of circles
+draw(4, circle(
+			cx(X*n+n/2-ShapeExtendX/2+Xo*ShapeN),
+			cy(Y*n+n/2-ShapeExtendY/2+Yo*ShapeN),
+			r(ShapeN/2-ShapeN/20),
+			fill("red"))) :-
+	pattern(b(X,Y), N),
+	shape(N, o(Xo,Yo)),
+	Xmax = #max { Xmo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)) },
+	Ymax = #max { Ymo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)) },
+	Max = #max { Xmax,a; Ymax,b },
+	ShapeN = n*2/(3*(Max+1)),
+	ShapeExtendX = ShapeN*Xmax,
+	ShapeExtendY = ShapeN*Ymax.
+%TODO: get rid of "global variable in tuple of aggregate element: Xmax"
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % debug visualization %
