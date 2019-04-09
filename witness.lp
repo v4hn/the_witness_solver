@@ -39,6 +39,9 @@ dot(c(x,y)).
 % n triangles on block
 triangles(n,b(x,y)).
 
+% block has color
+colored_block(b(x,y), color).
+
 %%%%%%%%%
 % model %
 %%%%%%%%%
