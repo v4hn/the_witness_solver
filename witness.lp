@@ -149,13 +149,14 @@ floodfilled_color(Bn, Color) :-
 % visualization %
 %%%%%%%%%%%%%%%%%
 
-#const n= 20.
+#const n= 1000.
 #const lwidth= n/5.
+#const swidth= "stroke-width:200".
 
 % rounded off grid
 draw(1, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("black"))) :-
 	crossing(c(X,Y)).
-draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("black"), style("stroke-width:4"))) :-
+draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("black"), style(swidth))) :-
 	path(p(c(X1,Y1), c(X2,Y2))).
 
 % big circle around start
@@ -203,11 +204,11 @@ draw(2,
 
 % show interupted paths if they are blocked
 % this draws line starts for both ends of the blocked line because blocked(p/2) is symmetric
-draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y2), stroke("black"), style("stroke-width:4"))) :-
+draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y2), stroke("black"), style(swidth))) :-
 	blocked(p(c(X1,Y1), c(X2,Y2))).
 
 % draw solution lines
-draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style("stroke-width:4"))) :-
+draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style(swidth))) :-
 	conn(p(c(X1,Y1), c(X2,Y2))).
 draw(3, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("lightgray"))) :-
 	used(c(X,Y)).
