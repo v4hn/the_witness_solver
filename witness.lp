@@ -47,6 +47,13 @@ triangles(n,b(x,y)).
 % block has color
 colored_block(b(x,y), color).
 
+% shape k requested on block x/y
+pattern(b(x,y), k).
+% shape k consists of two stacked blocks
+% shape is defined as offsets to an arbitrary anchor block at 0/0
+shape(k, o(0,0)).
+shape(k, o(0,1)).
+
 %%%%%%%%%
 % model %
 %%%%%%%%%
