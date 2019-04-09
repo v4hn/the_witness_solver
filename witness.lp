@@ -22,7 +22,7 @@ colored_block(b(0,0), "orange").
 pattern(b(2,0), 0).
 shape(0, o(0,0)).
 shape(0, o(0,1)).
-shape(0, o(1,0)).
+%shape(0, o(1,0)).
 
 %%%%%%%%%%%%%%%
 % explanation %
