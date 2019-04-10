@@ -339,7 +339,7 @@ draw(4, circle(
 
 
 %% draw block_connection for debugging purposes
-%draw(6, line(x1(X1*n+n/2), x2(X2*n+n/2), y1(Y1*n+n/2), y2(Y2*n+n/2), stroke("red"), style("stroke-width:2.0"))) :-
+%draw(6, line(x1(X1*n+n/2), x2(X2*n+n/2), y1(Y1*n+n/2), y2(Y2*n+n/2), stroke("red"), style(swidth))) :-
 %	block_connection(b(X1,Y1), b(X2,Y2)).
 
 %% draw pattern anchors
