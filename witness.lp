@@ -167,7 +167,7 @@ floodfilled_color(Bn, Color) :-
 
 1 { pattern(B,K,Anchor) : block(Anchor) } 1 :- pattern(B, K).
 N {
-shape_block(ShapeBlock) :
+contains_shape(B,ShapeBlock) :
 	shape(K,o(Xo,Yo)),
 	ShapeBlock = b(X+Xo,Y+Yo),
 	block(ShapeBlock)
@@ -176,9 +176,18 @@ shape_block(ShapeBlock) :
 	Anchor=b(X,Y),
 	N = #count { shape(Offset): shape(K,Offset) }.
 
+shape_block(ShapeBlock) :- contains_shape(B,ShapeBlock).
+
 :- shape_block(ShapeBlock),
 	block_connection(ShapeBlock, Neighbor),
 	not shape_block(Neighbor).
+
+contains_shape_floodfilled(OriginBlock,ShapeBlock):-
+	contains_shape(OriginBlock,ShapeBlock).
+contains_shape_floodfilled(OriginBlock,Neighbor):-
+	contains_shape_floodfilled(OriginBlock,ShapeBlock),
+	block_connection(ShapeBlock,Neighbor).
+:- pattern(B,K), not contains_shape_floodfilled(B,B).
 
 %%%%%%%%%%%%%%%%%
 % visualization %
@@ -318,6 +327,12 @@ draw(4, circle(
 % debug visualization %
 %%%%%%%%%%%%%%%%%%%%%%%
 
+%% draw shape-block structures
+%draw(0, rect(x(X*n), y(Y*n), width(n), height(n), fill("green"), opacity("0.5"))) :-
+%	shape_block(b(X,Y)).
+%draw(1, rect(x(X*n), y(Y*n), width(n), height(n), fill("blue"), opacity("0.5"))) :-
+%	contains_shape(B,b(X,Y)).
+
 %% draw colors for "flooded" block
 %draw(0, circle(cx(X*n+n/2), cy(Y*n+n/2), r(n/3), fill(Color), opacity("0.5"))) :-
 %	floodfilled_color(b(X,Y), Color).
@@ -326,6 +341,10 @@ draw(4, circle(
 %% draw block_connection for debugging purposes
 %draw(6, line(x1(X1*n+n/2), x2(X2*n+n/2), y1(Y1*n+n/2), y2(Y2*n+n/2), stroke("red"), style("stroke-width:2.0"))) :-
 %	block_connection(b(X1,Y1), b(X2,Y2)).
+
+%% draw pattern anchors
+%draw(7, circle(cx(X*n+n/2), cy(Y*n+n/2), r(n/4), fill("purple"))) :-
+%	pattern(B,K,b(X,Y)).
 
 %% example directives
 %draw(2, rect(x(n*X), y(n*Y), width(1), height(1), fill("red"))).

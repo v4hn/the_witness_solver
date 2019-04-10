@@ -15,8 +15,8 @@ This model requires the ASP solver [clingo](https://potassco.org/).
 - black dots on a node/crossing
 - yellow triangles on a block
 - colored dots on blocks
+- tetromino-like shapes on blocks
 
 ### Work in Progress
 
-- tetromino-like shapes on blocks
-
+- ...
