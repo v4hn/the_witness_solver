@@ -166,12 +166,15 @@ floodfilled_color(Bn, Color) :-
 0 { floodfilled_color(B, Color) : floodfilled_color(B,Color) } 1 :- block(B).
 
 1 { pattern(B,K,Anchor) : block(Anchor) } 1 :- pattern(B, K).
-shape_block(ShapeBlock):-
-	pattern(B,K,Anchor),
+N {
+shape_block(ShapeBlock) :
 	shape(K,o(Xo,Yo)),
+	ShapeBlock = b(X+Xo,Y+Yo),
+	block(ShapeBlock)
+} N :-
+	pattern(B,K,Anchor),
 	Anchor=b(X,Y),
-	ShapeBlock=b(X+Xo,Y+Yo),
-	block(ShapeBlock). % TODO: block assumtion accepts solutions where part of the shape is outside the grid / not a block
+	N = #count { shape(Offset): shape(K,Offset) }.
 
 :- shape_block(ShapeBlock),
 	block_connection(ShapeBlock, Neighbor),
