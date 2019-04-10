@@ -3,14 +3,14 @@
 %%%%%%%%%%%
 
 % surrounding grid of crossings/corners
-grid(4,4).
+grid(5,5).
 
 % start/exit position
 start(c(0,0)).
-exit(c(3,1)).
+exit(c(4,1)).
 
 blocked(c(3,3)).
-blocked(p(c(1,2),c(2,2))).
+blocked(p(c(1,1),c(2,1))).
 dot(p(c(0,2), c(0,3))).
 dot(c(1,1)).
 
