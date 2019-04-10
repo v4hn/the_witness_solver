@@ -68,7 +68,15 @@ crossing(A) :-
 	not blocked(A).
 
 % blocks are the square areas between coordinates/lines
-block(b(0..X-2, 0..Y-2)) :- grid(X,Y).
+possible_block(b(0..X-2, 0..Y-2)) :- grid(X,Y).
+
+block(B) :-
+	possible_block(B),
+	B = b(X,Y),
+	crossing(c(X,Y)),
+	crossing(c(X+1,Y)),
+	crossing(c(X,Y+1)),
+	crossing(c(X+1,Y+1)).
 
 % helpers
 neighbor_offset(0,1).
