@@ -7,7 +7,9 @@ grid(5,5).
 
 % start/exit position
 start(c(0,0)).
+start(c(4,4)).
 exit(c(4,1)).
+exit(c(1,4)).
 
 blocked(c(3,3)).
 blocked(p(c(1,1),c(2,1))).
@@ -114,14 +116,17 @@ paths_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1)))
 connection(P) :- conn(P).
 connection(p(B,A)) :- conn(p(A,B)).
 
+1 { selected_start(S) : start(S) } 1.
+1 { selected_exit(S) : exit(S) } 1.
+
 % always link start and exit
-linked(S) :- start(S).
+linked(S) :- selected_start(S).
 linked(A) :- linked(B); connection(p(A,B)).
-:- not linked(E); exit(E).
+:- not linked(E); selected_exit(E).
 
 % start and exit only have one connecting line
-:- start(S), 2 { connection(p(S,B)) : connection(p(S,B)) }.
-:- exit(S), 2 { connection(p(S,B)) : connection(p(S,B)) }.
+:- selected_start(S), 2 { connection(p(S,B)) : connection(p(S,B)) }.
+:- selected_exit(S), 2 { connection(p(S,B)) : connection(p(S,B)) }.
 
 % enforce a single line without intersections
 used(A) :- connection(p(A,_)).
@@ -259,25 +264,24 @@ draw(3, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("lightgray"))) :-
 
 % draw solution start
 draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
-	used(c(X,Y)),
-	start(c(X,Y)).
+	selected_start(c(X,Y)).
 
 draw(3,
 	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
 	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), left), used(c(X,Y)).
+	) :- exit_direction(c(X,Y), left), selected_exit(c(X,Y)).
 draw(3,
 	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
 	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), right), used(c(X,Y)).
+	) :- exit_direction(c(X,Y), right), selected_exit(c(X,Y)).
 draw(3,
 	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("lightgray")),
 	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), up), used(c(X,Y)).
+	) :- exit_direction(c(X,Y), up), selected_exit(c(X,Y)).
 draw(3,
 	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("lightgray")),
 	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), down), used(c(X,Y)).
+	) :- exit_direction(c(X,Y), down), selected_exit(c(X,Y)).
 
 % draw dot on path
 draw(4, circle(cx((X1+X2)*n/2), cy((Y1+Y2)*n/2), r(lwidth/2), fill("gray"))) :-
