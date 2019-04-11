@@ -192,22 +192,24 @@ draw(2, circle(cx(n*X), cy(n*Y), r(lwidth), fill("black"))) :-
 %TODO: add and use path_left/2, path_right/2, path_up/2, path_down/2.
 
 % draw exit depending on direction
-exit_direction(c(X,Y), up) :-
-	exit(c(X,Y));
-	not path(p(c(X,Y-1), c(X,Y))).
 exit_direction(c(X,Y), down) :-
-	exit(c(X,Y));
+	exit(c(X,Y)),
 	not path(p(c(X,Y), c(X,Y+1))).
-exit_direction(c(X,Y), left) :-
-	exit(c(X,Y));
-	not path(p(c(X-1,Y), c(X,Y)));
-	not exit_direction(c(X,Y), down);
-	not exit_direction(c(X,Y), up).
+exit_direction(c(X,Y), up) :-
+	exit(c(X,Y)),
+	not exit_direction(c(X,Y), down),
+	not path(p(c(X,Y-1), c(X,Y))).
 exit_direction(c(X,Y), right) :-
-	exit(c(X,Y));
-	not path(p(c(X,Y), c(X+1,Y)));
-	not exit_direction(c(X,Y), down);
+	exit(c(X,Y)),
+	not path(p(c(X,Y), c(X+1,Y))),
+	not exit_direction(c(X,Y), down),
 	not exit_direction(c(X,Y), up).
+exit_direction(c(X,Y), left) :-
+	exit(c(X,Y)),
+	not path(p(c(X-1,Y), c(X,Y))),
+	not exit_direction(c(X,Y), down),
+	not exit_direction(c(X,Y), up),
+	not exit_direction(c(X,Y), right).
 
 draw(2,
 	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("black")),
