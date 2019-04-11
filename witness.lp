@@ -287,11 +287,11 @@ draw(4,
 draw(4, circle(cx(X*n+n/2),cy(Y*n+n/2),r(n/8), fill(Color))) :-
 	colored_block(b(X,Y), Color).
 
-% TODO: draw rectangles instead of circles
-draw(4, circle(
-			cx(X*n+n/2-ShapeExtendX/2+Xo*ShapeN),
-			cy(Y*n+n/2-ShapeExtendY/2+Yo*ShapeN),
-			r(ShapeN/2-ShapeN/20),
+draw(4, rect(
+			x(X*n+n/2-ShapeExtendX/2+Xo*ShapeN-ShapeN/2),
+			y(Y*n+n/2-ShapeExtendY/2+Yo*ShapeN-ShapeN/2),
+			width(ShapeN-ShapeN/5),
+			height(ShapeN-ShapeN/5),
 			fill("red"))) :-
 	pattern(b(X,Y), N),
 	shape(N, o(Xo,Yo)),
