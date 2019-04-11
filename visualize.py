@@ -108,11 +108,20 @@ def serialize(model):
 	svg+= '</svg>'
 	return svg
 
-if __name__ == '__main__':
-	sols= int(sys.argv[1]) if len(sys.argv) > 1 else 1
+def solve(lp, instance, sols, programs):
 	ctl = clingo.Control(["-n", str(sols)])
-	ctl.load("witness.lp")
-	ctl.ground([("base", [])])
+	ctl.load(lp)
+	if len(instance) > 0:
+		ctl.load(instance)
+	ctl.ground([(x,[]) for x in programs])
+	with ctl.solve(yield_= True) as solutions:
+		for s in solutions:
+			yield s
+
+
+if __name__ == '__main__':
+	sols= int(sys.argv[2]) if len(sys.argv) > 2 else 1
+	instance= sys.argv[1] if len(sys.argv) > 1 else ""
 	print(
 '''<html>
 <head>
@@ -138,11 +147,15 @@ div.solution:hover {
 </head>
 <body>
 <div id="solutions">''')
-	with ctl.solve(yield_= True) as solutions:
-		for s in solutions:
-			print('<div class="solution">')
-			print(serialize(s))
-			print('</div>')
+	for s in solve("witness.lp", instance, sols, ["base", "visualize"]):
+		print('<div class="solution">')
+		print(serialize(s))
+		print('</div>')
+	#TODO: is there really no way to reset a Control object?
+	for s in solve("witness.lp", instance, sols, ["base", "visualize", "constraints"]):
+		print('<div class="solution">')
+		print(serialize(s))
+		print('</div>')
 	print(
 '''</div>
 </body>
