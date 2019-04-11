@@ -129,7 +129,7 @@ if __name__ == '__main__':
 <style>
 div.solution {
         display:inline-block;
-	min-width:200px;
+        min-width:200px;
         width: 22%;
         background-color: white;
         border: 10px solid green;
