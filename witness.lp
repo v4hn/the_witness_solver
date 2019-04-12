@@ -229,9 +229,9 @@ draw(2,
 	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("black"))
 	) :- exit_direction(c(X,Y), down).
 
-% show interupted paths if they are blocked
+% show interrupted paths if they are blocked
 % this draws line starts for both ends of the blocked line because blocked(p/2) is symmetric
-draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y2), stroke("black"), style(swidth))) :-
+draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y1+n*(Y2-Y1)/3), stroke("black"), style(swidth))) :-
 	blocked(p(c(X1,Y1), c(X2,Y2))).
 
 % draw solution lines
