@@ -26,3 +26,7 @@ shape(0, o(0,0)).
 shape(0, o(0,1)).
 shape(0, o(1,0)).
 
+%pattern_rotate(b(0,3), 1).
+pattern(b(0,3),1,1).
+shape(1, o(0,0)).
+shape(1, o(0,1)).

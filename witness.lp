@@ -146,16 +146,38 @@ floodfilled_color(Bn, Color) :-
 
 0 { floodfilled_color(B, Color) : floodfilled_color(B,Color) } 1 :- block(B).
 
-1 { pattern(B,K,Anchor) : block(Anchor) } 1 :- pattern(B, K).
+% helper: rotate offset coordinates by 90°
+rotate_offset(o(X,Y),o(Y,-X)):-
+	shape(K,N,o(X,Y)).
+rotate_offset(o(X,Y),o(Y,-X)):-
+	rotate_offset(o(Xo,Yo),o(X,Y)).
+
+shape(K,0,Offset) :- shape(K,Offset).
+shape(K,N+1,RotateOffset) :-
+	N >= 0,
+	N < 3,
+	shape(K,N,OriginalOffset),
+	rotate_offset(OriginalOffset,RotateOffset).
+
+% 0 rotation
+pattern(B,K,0) :- pattern(B,K).
+
+% choose orientation if not specified
+1 { pattern(B,K,0..3) } 1 :- pattern_rotate(B,K).
+% TODO: draw pattern_rotate
+% TODO: define pattern_rotate
+
+1 { pattern(B,K,Orientation,Anchor) : block(Anchor) } 1 :- pattern(B, K, Orientation).
+
 N {
 contains_shape(B,ShapeBlock) :
-	shape(K,o(Xo,Yo)),
+	shape(K,Orientation,o(Xo,Yo)),
 	ShapeBlock = b(X+Xo,Y+Yo),
 	block(ShapeBlock)
 } N :-
-	pattern(B,K,Anchor),
+	pattern(B,K,Orientation,Anchor),
 	Anchor=b(X,Y),
-	N = #count { shape(Offset): shape(K,Offset) }.
+	N = #count { shape(Offset): shape(K,Orientation,Offset) }.
 
 shape_block(ShapeBlock) :- contains_shape(B,ShapeBlock).
 
@@ -168,7 +190,7 @@ contains_shape_floodfilled(OriginBlock,ShapeBlock):-
 contains_shape_floodfilled(OriginBlock,Neighbor):-
 	contains_shape_floodfilled(OriginBlock,ShapeBlock),
 	block_connection(ShapeBlock,Neighbor).
-:- pattern(B,K), not contains_shape_floodfilled(B,B).
+:- pattern(B,K,O), not contains_shape_floodfilled(B,B).
 
 %%%%%%%%%%%%%%%%%
 % visualization %
