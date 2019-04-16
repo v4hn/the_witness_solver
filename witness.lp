@@ -82,6 +82,8 @@ paths_around_block(b(X,Y), p(c(X,Y+1), c(X+1,Y+1)))
 } :-
 	block(b(X,Y)).
 
+% TODO: this breaks solving from the command line.
+% How to specify which programs to use?
 #program constraints.
 
 % connection might be made by drawing the line on a path
@@ -172,6 +174,7 @@ contains_shape_floodfilled(OriginBlock,Neighbor):-
 % visualization %
 %%%%%%%%%%%%%%%%%
 
+%TODO: get rid of "info: atom does not occur in any rule head" messages when visualizing only the problem
 #program visualize.
 
 #const n= 1000.
