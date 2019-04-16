@@ -337,6 +337,8 @@ draw(4, rect(
 %% draw shape-block structures
 %draw(0, rect(x(X*n), y(Y*n), width(n), height(n), fill("green"), opacity("0.5"))) :-
 %	shape_block(b(X,Y)).
+%draw(0, rect(x(X*n), y(Y*n), width(n), height(n), fill("red"), opacity("0.5"))) :-
+%	pattern(OB,N,O,b(X,Y)).
 %draw(1, rect(x(X*n), y(Y*n), width(n), height(n), fill("blue"), opacity("0.5"))) :-
 %	contains_shape(B,b(X,Y)).
 
