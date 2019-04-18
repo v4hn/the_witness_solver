@@ -1,4 +1,4 @@
 #!/bin/sh
 
-python visualize.py example.lp 0 > example.html
-echo "Created file example.html with solutions."
+python visualize.py "puzzles/${1:-example}.lp" 0 > solution.html
+echo "Created file solution.html with solutions."
