@@ -308,8 +308,6 @@ draw(4, rect(
 	Xmax = #max { Xmo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)) },
 	Ymax = #max { Ymo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)) },
 	Max = #max { Xmo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)); Ymo, o(Xmo,Ymo) : shape(N,o(Xmo,Ymo)) },
-	%TODO: This more readable version triggers "global variable in tuple of aggregate element: Xmax"
-	% Max = #max { Xmax,a; Ymax,b },
 	ShapeN = n*2/(3*(Max+1)),
 	ShapeExtendX = ShapeN*Xmax,
 	ShapeExtendY = ShapeN*Ymax.
