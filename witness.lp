@@ -26,14 +26,14 @@ pattern(b(x,y), k).
 
 % shape l requested on block x/y
 % the shape can be arbitrarily rotated though
-pattern_rotate(b(x,y), l)
+pattern_rotate(b(x,y), l).
 
 % shape l requested on block x/y in orientation
 % 0 - upright
 % 1 - 90° turned
 % 2 - 180° turned
 % 3 - 270° turned
-pattern(b(x,y),m,0..3)
+pattern(b(x,y),m,0..3).
 
 % shape k consists of two stacked blocks
 % shape is defined as offsets to an arbitrary anchor block at 0/0
