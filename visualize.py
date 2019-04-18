@@ -152,7 +152,7 @@ div.solution:hover {
 		print(serialize(s))
 		print('</div>')
 	#TODO: is there really no way to reset a Control object?
-	for s in solve("witness.lp", instance, sols, ["base", "visualize", "constraints"]):
+	for s in solve("witness.lp", instance, sols, ["base", "constraints", "visualize", "visualize_solution"]):
 		print('<div class="solution">')
 		print(serialize(s))
 		print('</div>')

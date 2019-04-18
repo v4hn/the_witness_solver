@@ -207,7 +207,6 @@ contains_shape_floodfilled(OriginBlock,Neighbor):-
 % visualization %
 %%%%%%%%%%%%%%%%%
 
-%TODO: get rid of "info: atom does not occur in any rule head" messages when visualizing only the problem
 #program visualize.
 
 #const n= 1000.
@@ -270,33 +269,6 @@ draw(2,
 draw(1, line(x1(n*X1), y1(n*Y1), x2(n*X1+n*(X2-X1)/3), y2(n*Y1+n*(Y2-Y1)/3), stroke("black"), style(swidth))) :-
 	blocked(p(c(X1,Y1), c(X2,Y2))).
 
-% draw solution lines
-draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style(swidth))) :-
-	conn(p(c(X1,Y1), c(X2,Y2))).
-draw(3, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("lightgray"))) :-
-	used(c(X,Y)).
-
-% draw solution start
-draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
-	selected_start(c(X,Y)).
-
-draw(3,
-	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
-	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), left), selected_exit(c(X,Y)).
-draw(3,
-	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
-	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), right), selected_exit(c(X,Y)).
-draw(3,
-	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("lightgray")),
-	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), up), selected_exit(c(X,Y)).
-draw(3,
-	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("lightgray")),
-	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("lightgray"))
-	) :- exit_direction(c(X,Y), down), selected_exit(c(X,Y)).
-
 % draw dot on path
 draw(4, circle(cx((X1+X2)*n/2), cy((Y1+Y2)*n/2), r(lwidth/2), fill("gray"))) :-
 	dot(p(c(X1,Y1),c(X2,Y2))),
@@ -341,6 +313,37 @@ draw(4, rect(
 	ShapeN = n*2/(3*(Max+1)),
 	ShapeExtendX = ShapeN*Xmax,
 	ShapeExtendY = ShapeN*Ymax.
+
+#program visualize_solution.
+
+% draw solution lines
+draw(3, line(x1(n*X1), y1(n*Y1), x2(n*X2), y2(n*Y2), stroke("lightgray"), style(swidth))) :-
+	conn(p(c(X1,Y1), c(X2,Y2))).
+draw(3, circle(cx(n*X), cy(n*Y), r(lwidth/2), fill("lightgray"))) :-
+	used(c(X,Y)).
+
+% draw solution start
+draw(3, circle(cx(n*X), cy(n*Y), r(lwidth), fill("lightgray"))) :-
+	selected_start(c(X,Y)).
+
+% draw solution exit
+draw(3,
+	rect(x(n*X-n/3), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
+	circle(cx(n*X-n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), left), selected_exit(c(X,Y)).
+draw(3,
+	rect(x(n*X), y(n*Y-lwidth/2), width(n/3), height(lwidth), fill("lightgray")),
+	circle(cx(n*X+n/3), cy(n*Y), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), right), selected_exit(c(X,Y)).
+draw(3,
+	rect(x(n*X-lwidth/2), y(n*Y-n/3), width(lwidth), height(n/3), fill("lightgray")),
+	circle(cx(n*X), cy(n*Y-n/3), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), up), selected_exit(c(X,Y)).
+draw(3,
+	rect(x(n*X-lwidth/2), y(n*Y), width(lwidth), height(n/3), fill("lightgray")),
+	circle(cx(n*X), cy(n*Y+n/3), r(lwidth/2), fill("lightgray"))
+	) :- exit_direction(c(X,Y), down), selected_exit(c(X,Y)).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % debug visualization %
