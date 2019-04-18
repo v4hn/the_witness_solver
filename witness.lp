@@ -23,6 +23,18 @@ colored_block(b(x,y), color).
 
 % shape k requested on block x/y
 pattern(b(x,y), k).
+
+% shape l requested on block x/y
+% the shape can be arbitrarily rotated though
+pattern_rotate(b(x,y), l)
+
+% shape l requested on block x/y in orientation
+% 0 - upright
+% 1 - 90° turned
+% 2 - 180° turned
+% 3 - 270° turned
+pattern(b(x,y),m,0..3)
+
 % shape k consists of two stacked blocks
 % shape is defined as offsets to an arbitrary anchor block at 0/0
 shape(k, o(0,0)).
@@ -165,7 +177,6 @@ pattern(B,K,0) :- pattern(B,K).
 % choose orientation if not specified
 1 { pattern(B,K,0..3) } 1 :- pattern_rotate(B,K).
 % TODO: draw pattern_rotate
-% TODO: define pattern_rotate
 
 1 { pattern(B,K,Orientation,Anchor) : block(Anchor) } 1 :- pattern(B, K, Orientation).
 
